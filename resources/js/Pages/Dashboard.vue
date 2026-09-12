@@ -115,7 +115,7 @@ const toggleModule = async (mod) => {
 };
 
 const formatCurrency = (val) =>
-    new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR', maximumFractionDigits: 0 }).format(val || 0);
+    new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR', maximumFractionDigits: 0 }).format(Number(val) || 0);
 
 const attendanceRate = computed(() => {
     const total = props.stats.attendance_today || 0;
