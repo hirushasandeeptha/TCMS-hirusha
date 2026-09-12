@@ -24,39 +24,32 @@ const fetchModules = async () => {
     }
 };
 
-const toggleSubscription = async (mod) => {
+const toggleSubscription = (mod) => {
     if (subscribing.value === mod.slug) return;
     subscribing.value = mod.slug;
 
-    try {
-        const url = mod.is_subscribed
-            ? route('modules.unsubscribe', mod.slug)
-            : route('modules.subscribe', mod.slug);
-
-        const method = mod.is_subscribed ? 'DELETE' : 'POST';
-
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-XSRF-TOKEN': decodeURIComponent(
-                    document.cookie.match(/XSRF-TOKEN=([^;]+)/)?.[1] || ''
-                ),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+    if (mod.is_subscribed) {
+        router.delete(route('modules.unsubscribe', mod.slug), {
+            onSuccess: () => {
+                mod.is_subscribed = false;
+                subscribing.value = null;
             },
+            onError: () => {
+                subscribing.value = null;
+            },
+            preserveScroll: true,
         });
-
-        if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.message || 'Action failed.');
-        }
-
-        mod.is_subscribed = !mod.is_subscribed;
-    } catch (e) {
-        alert(e.message || 'Failed to update subscription.');
-    } finally {
-        subscribing.value = null;
+    } else {
+        router.post(route('modules.subscribe', mod.slug), {}, {
+            onSuccess: () => {
+                mod.is_subscribed = true;
+                subscribing.value = null;
+            },
+            onError: () => {
+                subscribing.value = null;
+            },
+            preserveScroll: true,
+        });
     }
 };
 

@@ -76,41 +76,33 @@ const quickActions = computed(() =>
     moduleCards.filter((m) => !m.slug || props.subscribedModules.includes(m.slug)),
 );
 
-const toggleModule = async (mod) => {
+const toggleModule = (mod) => {
     if (toggling.value === mod.slug) return;
     toggling.value = mod.slug;
 
-    try {
-        const url = mod.is_subscribed
-            ? route('modules.unsubscribe', mod.slug)
-            : route('modules.subscribe', mod.slug);
-
-        const method = mod.is_subscribed ? 'DELETE' : 'POST';
-
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-XSRF-TOKEN': decodeURIComponent(
-                    document.cookie.match(/XSRF-TOKEN=([^;]+)/)?.[1] || ''
-                ),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.message || 'Action failed');
-        }
-
-        // Flip local state + reload dashboard data live
+    const onSuccess = () => {
         mod.is_subscribed = !mod.is_subscribed;
-        router.reload({ only: ['subscribedModules', 'stats'] });
-    } catch (e) {
-        alert(e.message || 'Failed to update subscription.');
-    } finally {
         toggling.value = null;
+        // Full page reload to refresh stats + subscribedModules
+        router.reload();
+    };
+
+    const onError = () => {
+        toggling.value = null;
+    };
+
+    if (mod.is_subscribed) {
+        router.delete(route('modules.unsubscribe', mod.slug), {
+            onSuccess,
+            onError,
+            preserveScroll: true,
+        });
+    } else {
+        router.post(route('modules.subscribe', mod.slug), {}, {
+            onSuccess,
+            onError,
+            preserveScroll: true,
+        });
     }
 };
 
