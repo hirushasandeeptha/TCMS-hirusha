@@ -1,0 +1,11 @@
+{
+    "name": "Attendance",
+    "alias": "attendance",
+    "description": "QR-based attendance tracking for tuition classes",
+    "keywords": [],
+    "priority": 3,
+    "providers": [
+        "Modules\\Attendance\\Providers\\AttendanceServiceProvider"
+    ],
+    "files": []
+}

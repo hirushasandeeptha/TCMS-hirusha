@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\Core\Scopes;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ScopeInterface;
+use Illuminate\Support\Facades\Auth;
+
+final class TenantScope implements ScopeInterface
+{
+    /**
+     * Apply the tenant scope — filter by authenticated user.
+     */
+    public function apply(Builder $builder, Model $model): void
+    {
+        if (Auth::check()) {
+            $builder->where($model->getTable() . '.user_id', Auth::id());
+        }
+    }
+
+    /**
+     * Allow removing this scope for admin queries.
+     */
+    public function remove(Builder $builder, Model $model): void
+    {
+        $builder->withoutGlobalScope(self::class);
+    }
+}

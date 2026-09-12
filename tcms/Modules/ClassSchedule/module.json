@@ -1,0 +1,11 @@
+{
+    "name": "ClassSchedule",
+    "alias": "classschedule",
+    "description": "Class scheduling and timetable management for tuition classes",
+    "keywords": [],
+    "priority": 2,
+    "providers": [
+        "Modules\\ClassSchedule\\Providers\\ClassScheduleServiceProvider"
+    ],
+    "files": []
+}

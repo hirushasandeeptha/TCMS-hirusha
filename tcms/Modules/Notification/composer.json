@@ -1,0 +1,27 @@
+{
+    "name": "nwidart/notification",
+    "description": "Notification and messaging module for TCMS",
+    "authors": [
+        {
+            "name": "TCMS Team"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Notification\\": "app/",
+            "Modules\\Notification\\Database\\Factories\\": "database/factories/",
+            "Modules\\Notification\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Notification\\Tests\\": "tests/"
+        }
+    }
+}

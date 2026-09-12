@@ -1,0 +1,27 @@
+{
+    "name": "nwidart/classschedule",
+    "description": "Class scheduling module for TCMS",
+    "authors": [
+        {
+            "name": "TCMS Team"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ClassSchedule\\": "app/",
+            "Modules\\ClassSchedule\\Database\\Factories\\": "database/factories/",
+            "Modules\\ClassSchedule\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\ClassSchedule\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Notification",
+    "alias": "notification",
+    "description": "Parent/student notifications and messaging for tuition classes",
+    "keywords": [],
+    "priority": 5,
+    "providers": [
+        "Modules\\Notification\\Providers\\NotificationServiceProvider"
+    ],
+    "files": []
+}

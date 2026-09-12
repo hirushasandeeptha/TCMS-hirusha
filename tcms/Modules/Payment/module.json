@@ -1,0 +1,11 @@
+{
+    "name": "Payment",
+    "alias": "payment",
+    "description": "Fee tracking and payment management for tuition classes",
+    "keywords": [],
+    "priority": 4,
+    "providers": [
+        "Modules\\Payment\\Providers\\PaymentServiceProvider"
+    ],
+    "files": []
+}
